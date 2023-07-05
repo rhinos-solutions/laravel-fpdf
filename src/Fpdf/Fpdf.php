@@ -1857,8 +1857,6 @@ protected function _putresources()
 
 protected function _putinfo()
 {
-	$date = @date('YmdHisO', $this->CreationDate);
-	$this->metadata['CreationDate'] = 'D:'.substr($date,0,-2)."'".substr($date,-2)."'";
 	foreach($this->metadata as $key=>$value)
 		$this->_put('/'.$key.' '.$this->_textstring($value));
 }
