@@ -1091,10 +1091,16 @@ protected function _beginpage($orientation, $size, $rotation)
 		$orientation = $this->DefOrientation;
 	else
 		$orientation = strtoupper($orientation[0]);
-	if($size=='')
+	if ($size == '') {
 		$size = $this->DefPageSize;
-	else
+	} elseif (is_array($size)) {
+		$area1 = $size[0] * $size[1];
+		$area2 = $this->StdPageSizes['a5'][0] * $this->StdPageSizes['a5'][1];
+
+		$size = ($area1 > $area2) ? [$size[0] / $this->k, $size[1] / $this->k] : $this->_getpagesize($size);
+	} else {
 		$size = $this->_getpagesize($size);
+	}
 	if($orientation!=$this->CurOrientation || $size[0]!=$this->CurPageSize[0] || $size[1]!=$this->CurPageSize[1])
 	{
 		// New size or orientation
